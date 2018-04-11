@@ -39,25 +39,25 @@ void testLoadDataFromFile() {
 	vector<vector<double>> features;
 	vector<double> labels;
 
-	Utils::loadData("ex1data1.csv", features, labels, ',');
+	Utils::loadData("../data/ex1data1.csv", features, labels, ',');
 	cout << "ex1data1.csv Features and labels" <<endl;
 	outputFeaturesAndLabels(features, labels);
 	features.clear();
 	labels.clear();
 
-	Utils::loadData("ex1data1.txt", features, labels);
+	Utils::loadData("../data/ex1data1.txt", features, labels);
 	cout << "ex1data1.txt Features and labels" <<endl;
 	outputFeaturesAndLabels(features, labels);
 	features.clear();
 	labels.clear();
 
-	Utils::loadData("ex1data2.csv", features, labels, ',');
+	Utils::loadData("../data/ex1data2.csv", features, labels, ',');
 	cout << "ex1data2.csv Features and labels" <<endl;
 	outputFeaturesAndLabels(features, labels);
 	features.clear();
 	labels.clear();
 
-	Utils::loadData("ex1data2.txt", features, labels);
+	Utils::loadData("../data/ex1data2.txt", features, labels);
 	cout << "ex1data2.txt Features and labels" <<endl;
 	outputFeaturesAndLabels(features, labels);
 	features.clear();
