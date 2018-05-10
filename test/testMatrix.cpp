@@ -16,6 +16,17 @@ TEST(Matrix, Initializer_list) {
     ASSERT_THAT(m3.flatten(), ElementsAre(0, -2, 3, -4, 5, 6)); 
 }
 
+TEST(Matrix, Shape_size) {
+    Matrix m1{1,2,3};
+    Matrix m2{{1,2,3}, {4, 5, 6}};
+    Matrix m3{{0,-2,3}, {-4, 5, 6}, {99, 100, 0}, {5, 9, 10}};
+    
+    Matrix::size s = m1.shape();
+    ASSERT_THAT(s, testing::Pair(3, 1));
+    ASSERT_THAT(m2.shape(), testing::Pair(2, 3));
+    ASSERT_THAT(m3.shape(), testing::Pair(4, 3));
+}
+
 TEST(GMock, Vector) {
     Matrix y{1,2,3};
     Matrix r{{1,2,3}, {4, 5, 6}};
