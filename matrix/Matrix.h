@@ -2,11 +2,13 @@
 #define LINEAR_REGRESSION_MATRIX_H__
 
 #include <cstddef> // size_t
+#include <vector>
 #include <iostream>
 
 using std::size_t;
 using std::ostream;
 using std::istream;
+using std::vector;
 
 class Matrix {
 	public:
@@ -39,6 +41,8 @@ class Matrix {
 		void swapRows(size_t, size_t);
 		Matrix transpose();
 		Matrix inverse();
+
+        vector<vector<double>> toVector();
 
 		// vector
 		static double dotProduct(const Matrix&, const Matrix&);

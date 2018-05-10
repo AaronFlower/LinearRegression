@@ -1,4 +1,9 @@
 #include "gtest/gtest.h"
+#include "gmock/gmock.h"
+#include "Matrix.h"
+#include <vector>
+
+using testing::ElementsAre;
 
 bool isPrime(int n) {
     if (n <= 1) return false;
@@ -38,3 +43,17 @@ TEST(isPrimeTest, Positive) {
   EXPECT_TRUE(isPrime(23));
 }
 
+TEST(GMock, Vector) {
+    Matrix x;
+    std::vector<int> v = {5, 10, 15};
+    std::vector<std::vector<int>> vv = {{5, 10, 15}, {2, 4, 6}};
+    int a[] = {1, 2, 3};
+    std::vector<int> va;
+    va.assign(a, a + 3);
+    ASSERT_THAT(va, ElementsAre(1, 2, 3));
+    ASSERT_THAT(v, ElementsAre(5, 10, 15));
+    ASSERT_THAT(vv,ElementsAre(ElementsAre(5, 10, 15), ElementsAre(2, 4, 6)));
+}
+
+TEST(Matrix, Initialization) {
+}

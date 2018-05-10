@@ -10,8 +10,7 @@ message(STATUS "Check flags ${CMAKE_CXX_FLAGS}")
 
 # todo add test check
 enable_testing()
-add_subdirectory(lib/googletest/googletest)
-
+add_subdirectory(lib/googletest)
 
 add_subdirectory(src)
 add_subdirectory(test)
