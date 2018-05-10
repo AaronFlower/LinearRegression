@@ -1,4 +1,5 @@
 #include "Matrix.h"
+#include <cassert>
 
 /**
  * Public functions
@@ -22,19 +23,13 @@ Matrix::Matrix(initializer_list<initializer_list<double>> init_list) {
     auto it = init_list.begin();
     size_t i, j;
     for (i = 0; i < m; ++i) {
+        assert(n == (*it).size());
         j = 0;
         for (auto ele:*it) {
             *(*(mat + i) + j) = ele;
             ++j;
         }
         ++it;
-    }
-
-    std::cout << "\nAfter Initialization: ";
-    for (i = 0; i < m; ++i) {
-        for (j =0; j < n; ++j) {
-            std::cout << *(*(mat + i) + j) << "\t";
-        }
     }
 }
 

@@ -7,11 +7,13 @@ using testing::ElementsAre;
 using testing::DoubleEq;
 
 TEST(Matrix, Initializer_list) {
-    Matrix y{1,2,3};
-    Matrix r{{1,2,3}, {4, 5, 6}};
-    y.flatten();   
-    r.flatten();   
-    ASSERT_THAT(y.flatten(), ElementsAre(1, 2, 3)); 
+    Matrix m1{1,2,3};
+    Matrix m2{{1,2,3}, {4, 5, 6}};
+    Matrix m3{{0,-2,3}, {-4, 5, 6}};
+
+    ASSERT_THAT(m1.flatten(), ElementsAre(1, 2, 3)); 
+    ASSERT_THAT(m2.flatten(), ElementsAre(1, 2, 3, 4, 5, 6)); 
+    ASSERT_THAT(m3.flatten(), ElementsAre(0, -2, 3, -4, 5, 6)); 
 }
 
 TEST(GMock, Vector) {
