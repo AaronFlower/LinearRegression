@@ -9,11 +9,14 @@ using std::size_t;
 using std::ostream;
 using std::istream;
 using std::vector;
+using std::initializer_list;
+using std::pair;
 
 class Matrix {
 	public:
-		Matrix();
-		Matrix(size_t m, size_t n);
+        using size = pair<size_t, size_t>;
+        Matrix(initializer_list<double>);
+        Matrix(initializer_list<initializer_list<double>>);
 		Matrix(const Matrix &);
 		Matrix& operator=(const Matrix&);
 		~Matrix();
@@ -42,7 +45,8 @@ class Matrix {
 		Matrix transpose();
 		Matrix inverse();
 
-        vector<vector<double>> toVector();
+        vector<double> flatten();
+        size shape(); 
 
 		// vector
 		static double dotProduct(const Matrix&, const Matrix&);
