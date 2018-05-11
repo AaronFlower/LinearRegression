@@ -15,13 +15,18 @@ using std::pair;
 class Matrix {
 	public:
         using size = pair<size_t, size_t>;
+
+        Matrix();
         Matrix(initializer_list<double>);
         Matrix(initializer_list<initializer_list<double>>);
 		Matrix(const Matrix &);
-		Matrix& operator=(const Matrix&);
-		~Matrix();
 
-	  double& operator()(size_t i, size_t j) { return mat[i][j];}
+		~Matrix();
+		Matrix& operator=(const Matrix&);
+		Matrix& operator=(initializer_list<double>);
+		Matrix& operator=(initializer_list<initializer_list<double>>);
+
+	    double& operator()(size_t i, size_t j) { return mat[i][j];}
 		const double& operator()(size_t i, size_t j) const { return mat[i][j];}
 
 		Matrix& operator+=(const Matrix&);
@@ -45,18 +50,20 @@ class Matrix {
 		Matrix transpose();
 		Matrix inverse();
 
-        vector<double> flatten();
-        size shape(); 
+        vector<double> flatten() const noexcept;
+        size shape() const noexcept; 
 
 		// vector
 		static double dotProduct(const Matrix&, const Matrix&);
 	 		
 	private:
-		size_t m;
-		size_t n;
+		size_t m = 0;
+		size_t n = 0;
 		double **mat;
 
 		void allocSpace();
+        void reallocSpace(size_t, size_t);
+        void freeSpace();
 };
 
 ostream& operator<<(ostream &, const Matrix&);
