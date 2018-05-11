@@ -15,16 +15,24 @@ using std::pair;
 class Matrix {
 	public:
         using size = pair<size_t, size_t>;
+        using vec = vector<double>;
+        using vvec = vector<vec>;
+        using ilist = initializer_list<double>;
+        using iilist = initializer_list<ilist>;
 
         Matrix();
-        Matrix(initializer_list<double>);
-        Matrix(initializer_list<initializer_list<double>>);
+        Matrix(vec);
+        Matrix(vvec);
+        Matrix(ilist);
+        Matrix(iilist);
 		Matrix(const Matrix &);
 
 		~Matrix();
 		Matrix& operator=(const Matrix&);
-		Matrix& operator=(initializer_list<double>);
-		Matrix& operator=(initializer_list<initializer_list<double>>);
+		Matrix& operator=(ilist);
+		Matrix& operator=(iilist);
+		Matrix& operator=(vec);
+		Matrix& operator=(vvec);
 
 	    double& operator()(size_t i, size_t j) { return mat[i][j];}
 		const double& operator()(size_t i, size_t j) const { return mat[i][j];}

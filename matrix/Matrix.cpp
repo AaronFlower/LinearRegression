@@ -6,18 +6,35 @@
  */
 Matrix::Matrix(){}
 
-Matrix::Matrix(initializer_list<double> init_list) {
-    m = init_list.size();
+Matrix::Matrix(vec v) {
+    m = v.size();
     n = 1;
     allocSpace();
     size_t j = 0;
-    for (auto it:init_list) {
+    for (auto it:v) {
         *(*(mat + j) + 0) = it;
         ++j;
     }
 }
 
-Matrix::Matrix(initializer_list<initializer_list<double>> init_list) {
+Matrix::Matrix(vvec vv) {
+    m = vv.size();
+    n = (*vv.begin()).size();
+    allocSpace();
+    auto it = vv.cbegin();
+    size_t i, j;
+    for (i = 0; i < m; ++i) {
+        assert(n == (*it).size());
+        j = 0;
+        for (auto ele:*it) {
+            *(*(mat + i) + j) = ele;
+            ++j;
+        }
+        ++it;
+    }
+}
+
+Matrix::Matrix(iilist init_list) {
     m = init_list.size();
     n = (*init_list.begin()).size();
     allocSpace();
@@ -33,6 +50,8 @@ Matrix::Matrix(initializer_list<initializer_list<double>> init_list) {
         ++it;
     }
 }
+
+Matrix::Matrix(ilist init_list):Matrix(vec(init_list)) {}
 
 Matrix::Matrix(const Matrix& cmat) {
    size s = cmat.shape();

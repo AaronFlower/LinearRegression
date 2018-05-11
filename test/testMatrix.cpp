@@ -19,6 +19,23 @@ TEST(Matrix, Initializer_list_ctor) {
     ASSERT_THAT(m4.flatten(), ElementsAre(2, 3, 5, 7, 11, 17));
 }
 
+TEST(Matrix, Vecotr_ctor) {
+    Matrix m1 = Matrix::vec{1,2,3};
+    Matrix m2 = Matrix::vvec{{1,2,3}, {4, 5, 6}};
+    const Matrix m3 = Matrix::vvec{{0,-2}, {-4, 5}};
+    const Matrix m4 = Matrix::vvec{{2, 3, 5}, {7, 11, 17}}; 
+
+    ASSERT_THAT(m1.flatten(), ElementsAre(1, 2, 3)); 
+    ASSERT_THAT(m2.flatten(), ElementsAre(1, 2, 3, 4, 5, 6)); 
+    ASSERT_THAT(m3.flatten(), ElementsAre(0, -2, -4, 5)); 
+    ASSERT_THAT(m4.flatten(), ElementsAre(2, 3, 5, 7, 11, 17));
+
+
+    ASSERT_THAT(m1.shape(), testing::Pair(3, 1));
+    ASSERT_THAT(m2.shape(), testing::Pair(2, 3));
+    ASSERT_THAT(m3.shape(), testing::Pair(2, 2));
+    ASSERT_THAT(m4.shape(), testing::Pair(2, 3));
+}
 TEST(Matrix, Initializer_list_assign) {
     Matrix m1, m2, m3;
     m1  = {1, 2, 3};
