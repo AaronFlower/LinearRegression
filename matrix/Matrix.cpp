@@ -34,6 +34,16 @@ Matrix::Matrix(initializer_list<initializer_list<double>> init_list) {
     }
 }
 
+Matrix::Matrix(const Matrix& cmat) {
+   size s = cmat.shape();
+   if (s.first != m || s.second != n) reallocSpace(s.first, s.second);
+
+   for (size_t i = 0; i < m; ++i) {
+      for (size_t j = 0; j < n; ++j) {
+         *(*(mat + i) + j) = cmat(i, j); 
+      }
+   }
+}
 
 Matrix::size Matrix::shape() const noexcept {
     return Matrix::size(m, n);

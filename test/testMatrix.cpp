@@ -52,6 +52,24 @@ TEST(Matrix, Assign_ctor) {
     ASSERT_THAT(m4.shape(), testing::Pair(2, 3));
 }
 
+TEST(Matrix, Copy_ctor) {
+    Matrix m1 = {1, 2, 3};
+    Matrix m2 = m1;
+    Matrix m3 = {{2, 3, 5}, {7, 11, 17}};
+    Matrix m4 = m3;
+
+    EXPECT_THAT(m1.flatten(), ElementsAre(1, 2, 3)); 
+    EXPECT_THAT(m2.flatten(), ElementsAre(1, 2, 3)); 
+    EXPECT_THAT(m3.flatten(), ElementsAre(2, 3, 5, 7, 11, 17)); 
+    EXPECT_THAT(m4.flatten(), ElementsAre(2, 3, 5, 7, 11, 17)); 
+    
+
+    EXPECT_THAT(m1.shape(), testing::Pair(3, 1));
+    EXPECT_THAT(m2.shape(), testing::Pair(3, 1));
+    EXPECT_THAT(m3.shape(), testing::Pair(2, 3));
+    EXPECT_THAT(m4.shape(), testing::Pair(2, 3));
+}
+
 TEST(Matrix, Shape_size) {
     Matrix m1{1,2,3};
     Matrix m2{{1,2,3}, {4, 5, 6}};
