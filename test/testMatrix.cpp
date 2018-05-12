@@ -57,6 +57,7 @@ TEST(Matrix, Assign_ctor) {
     m2 = m1;
     m3  = {{2, 3, 5}, {7, 11, 17}};
     m4 = m3;
+    m4 = m4;
     ASSERT_THAT(m1.flatten(), ElementsAre(1, 2, 3)); 
     ASSERT_THAT(m2.flatten(), ElementsAre(1, 2, 3)); 
     ASSERT_THAT(m3.flatten(), ElementsAre(2, 3, 5, 7, 11, 17)); 
@@ -96,6 +97,42 @@ TEST(Matrix, Shape_size) {
     ASSERT_THAT(s, testing::Pair(3, 1));
     ASSERT_THAT(m2.shape(), testing::Pair(2, 3));
     ASSERT_THAT(m3.shape(), testing::Pair(4, 3));
+}
+
+TEST(MatrixSelfOperation, Add) {
+    Matrix m1{{1, 2, 3}, {4, 5, 6}};
+    Matrix m2{{2, 3, 0}, {4, 4, 4}};
+    m1 += m2;
+
+    EXPECT_THAT(m1.shape(), testing::Pair(2, 3));
+    EXPECT_THAT(m1.flatten(), ElementsAre(3, 5, 3, 8, 9, 10)); 
+}
+
+TEST(MatrixSelfOperation, Minus) {
+    Matrix m1{{1, 2, 3}, {4, 5, 6}};
+    Matrix m2{{2, 3, 0}, {4, 4, 4}};
+    m1 -= m2;
+
+    EXPECT_THAT(m1.shape(), testing::Pair(2, 3));
+    EXPECT_THAT(m1.flatten(), ElementsAre(-1, -1, 3, 0, 1, 2)); 
+}
+
+TEST(MatrixSelfOperation, MultiplyScalar) {
+    Matrix m1{{-1, 2, -3}, {4, 5, 6}};
+    m1 *= -1;
+
+    EXPECT_THAT(m1.shape(), testing::Pair(2, 3));
+    EXPECT_THAT(m1.flatten(), ElementsAre(1, -2, 3, -4, -5, -6)); 
+}
+
+TEST(MatrixSelfOperation, Power) {
+    Matrix m1{{-1, 2, -3}, {4, 5, 6}};
+    Matrix m2 = m1 ^ 3;
+    m1 ^= 2;
+
+    EXPECT_THAT(m1.shape(), testing::Pair(2, 3));
+    EXPECT_THAT(m1.flatten(), ElementsAre(1, 4, 9, 16, 25, 36)); 
+    EXPECT_THAT(m2.flatten(), ElementsAre(-1, 8, -27, 64, 125, 216)); 
 }
 
 TEST(GMock, Vector) {

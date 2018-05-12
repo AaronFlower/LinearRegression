@@ -1,5 +1,6 @@
 #include "Matrix.h"
 #include <cassert>
+#include <cmath>
 
 /**
  * Public functions
@@ -73,12 +74,14 @@ Matrix::~Matrix() {
 }
 
 Matrix& Matrix::operator= (const Matrix& rmat) {
-    size s = rmat.shape();
-    if (m != s.first || n != s.second) reallocSpace(s.first, s.second);
+    if (this != &rmat) {
+        size s = rmat.shape();
+        if (m != s.first || n != s.second) reallocSpace(s.first, s.second);
 
-    for (size_t i =0; i < m; ++i) {
-        for (size_t j = 0; j < n; ++j) {
-            *(*(mat + i) + j) = rmat(i, j);
+        for (size_t i =0; i < m; ++i) {
+            for (size_t j = 0; j < n; ++j) {
+                *(*(mat + i) + j) = rmat(i, j);
+            }
         }
     }
     return *this;
@@ -115,6 +118,48 @@ Matrix& Matrix::operator= (initializer_list<initializer_list<double>> init_list)
     return *this;
 }
 
+Matrix& Matrix::operator+=(const Matrix& rmat) {
+    size rs = rmat.shape();
+    assert(rs.first == m && rs.second == n);
+    for (size_t i = 0; i < m; ++i) {
+        for(size_t j = 0; j < n; ++j) {
+            *(*(mat + i) + j) += rmat(i, j);
+        }
+    }
+
+    return *this;
+}
+
+Matrix& Matrix::operator-=(const Matrix& rmat) {
+    size rs = rmat.shape();
+    assert(rs.first == m && rs.second == n);
+    for (size_t i = 0; i < m; ++i) {
+        for(size_t j = 0; j < n; ++j) {
+            *(*(mat + i) + j) -= rmat(i, j);
+        }
+    }
+    return *this;
+}
+
+Matrix& Matrix::operator*=(double scalar) {
+    for (size_t i = 0; i < m; ++i) {
+        for(size_t j = 0; j < n; ++j) {
+            *(*(mat + i) + j) *= scalar;
+        }
+    }
+    return *this;
+}
+
+Matrix& Matrix::operator^=(int exponent) {
+    for (size_t i = 0; i < m; ++i) {
+        for(size_t j = 0; j < n; ++j) {
+           double v = *(*(mat + i) + j); 
+           *(*(mat + i) + j) = std::pow(v, exponent);
+        } 
+    }
+    return *this;
+}
+
 vector<double> Matrix::flatten() const noexcept {
     vector<double> v;
     for (size_t i = 0; i < m; ++i) {
@@ -129,10 +174,10 @@ vector<double> Matrix::flatten() const noexcept {
  * Private functions
  */
 void Matrix::allocSpace() {
-	mat = new double*[m];
-	for (size_t i = 0; i < m; ++i) {
-		mat[i] = new double[n];
-	}
+    mat = new double*[m];
+    for (size_t i = 0; i < m; ++i) {
+        mat[i] = new double[n];
+    }
 }
 
 void Matrix::reallocSpace (size_t newM, size_t newN) {
@@ -151,5 +196,17 @@ void Matrix::freeSpace () {
     }
 }
 
+/**
+ * friend functions
+ */
 
-
+Matrix operator^(const Matrix& mat, double exponent) {
+    Matrix newM = mat;
+    Matrix::size s = mat.shape();
+    for (size_t i = 0; i < s.first; ++i) {
+        for (size_t j =0; j < s.second; ++j) {
+          newM(i, j) = std::pow(newM(i, j), exponent); 
+        }
+    }
+    return newM; 
+}
