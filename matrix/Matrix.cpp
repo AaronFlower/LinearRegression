@@ -210,3 +210,18 @@ Matrix operator^(const Matrix& mat, double exponent) {
     }
     return newM; 
 }
+
+Matrix operator*(const Matrix& mat, double scalar) {
+    Matrix newM = mat;
+    Matrix::size s = mat.shape();
+    for (size_t i = 0; i < s.first; ++i) {
+        for (size_t j =0; j < s.second; ++j) {
+          newM(i, j) *= scalar;
+        }
+    }
+    return newM; 
+}
+
+Matrix operator*(double scalar, const Matrix& mat) {
+   return mat * scalar;
+}
